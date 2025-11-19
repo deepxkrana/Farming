@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FarmQuest - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+      @keyframes progressBar {
+        0% { width: 0%; }
+      }
+      @keyframes sparkle {
+        0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        50% { transform: scale(1.5) rotate(180deg); opacity: 0.8; }
+      }
+      .sparkle {
+        animation: sparkle 0.6s ease-in-out;
+      }
+      .toast {
+        animation: slideInRight 0.5s ease-out;
+      }
+      @keyframes slideInRight {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-emerald-50 to-lime-100 min-h-screen">
+    <nav class="bg-emerald-700 text-white shadow-xl">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl font-bold">FarmQuest</h1>
+          <div class="flex gap-6">
+            <a href="dashboard.html" class="hover:text-yellow-300 font-semibold border-b-2 border-yellow-300">Dashboard</a>
+            <a href="knowledge.html" class="hover:text-yellow-300 font-semibold">Knowledge</a>
+            <a href="community.html" class="hover:text-yellow-300 font-semibold">Community</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-8">
+      <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+          <div>
+            <h2 class="text-4xl font-bold text-emerald-700 mb-2">Farmer <span id="farmerName"></span></h2>
+            <p class="text-gray-600">Level <span id="farmerLevel" class="font-bold text-emerald-600">1</span></p>
+          </div>
+          <div class="flex gap-8">
+            <div class="text-center">
+              <p class="text-3xl font-bold text-yellow-600" id="coinCount">0</p>
+              <p class="text-gray-600">🪙 Coins</p>
+            </div>
+            <div class="text-center">
+              <p class="text-3xl font-bold text-emerald-600" id="xpCount">0</p>
+              <p class="text-gray-600">⚡ XP</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6">
+          <div class="flex justify-between text-sm text-gray-600 mb-2">
+            <span>XP Progress</span>
+            <span><span id="currentXP">0</span> / <span id="nextLevelXP">100</span> XP</span>
+          </div> 
+          <div class="w-full bg-gray-200 rounded-full h-6 overflow-hidden">
+            <div id="xpBar" class="bg-gradient-to-r from-emerald-500 to-lime-500 h-6 rounded-full transition-all duration-1000" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-3xl font-bold text-emerald-800 mb-6">🌱 Farm Challenges</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8" id="challengesGrid">
+      </div>
+
+      <h3 class="text-3xl font-bold text-emerald-800 mb-6">🏆 Leaderboard</h3>
+      <div class="bg-white rounded-2xl shadow-xl p-6">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b-2 border-emerald-200">
+              <th class="text-left py-3 px-4">Rank</th>
+              <th class="text-left py-3 px-4">Farmer</th>
+              <th class="text-right py-3 px-4">XP</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="challengeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-2xl p-8 shadow-2xl max-w-lg w-full mx-4 transform scale-0" id="modalContent">
+        <div class="text-6xl text-center mb-4" id="modalIcon"></div>
+        <h2 class="text-3xl font-bold text-emerald-700 mb-4 text-center" id="modalTitle"></h2>
+        <p class="text-gray-600 mb-6 text-center" id="modalDescription"></p>
+        <div class="flex justify-center gap-6 mb-6">
+          <div class="text-center">
+            <p class="text-2xl font-bold text-yellow-600" id="modalCoins"></p>
+            <p class="text-sm text-gray-600">🪙 Coins</p>
+          </div>
+          <div class="text-center">
+            <p class="text-2xl font-bold text-emerald-600" id="modalXP"></p>
+            <p class="text-sm text-gray-600">⚡ XP</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <button id="startChallenge" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-all">
+            Start Challenge 🚀
+          </button>
+          <button id="closeModal" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 rounded-lg transition-all">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastContainer" class="fixed top-20 right-6 z-50 space-y-4"></div>
+
+    <footer class="bg-emerald-800 text-white py-6 mt-12">
+      <div class="container mx-auto text-center">
+        <p class="text-lg">🌍 Building a sustainable future, one farm at a time</p>
+      </div>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

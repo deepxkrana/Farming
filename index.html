@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FarmQuest - Gamified Sustainable Farming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+      }
+      @keyframes moveClouds {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(100vw); }
+      }
+      @keyframes grow {
+        0% { transform: scale(0); }
+        100% { transform: scale(1); }
+      }
+      @keyframes slideInLeft {
+        0% { transform: translateX(-100vw); }
+        100% { transform: translateX(0); }
+      }
+      @keyframes slideInRight {
+        0% { transform: translateX(100vw); }
+        100% { transform: translateX(0); }
+      }
+      .cloud {
+        animation: moveClouds 60s linear infinite;
+      }
+      .sun {
+        animation: float 4s ease-in-out infinite;
+      }
+      .sheep {
+        animation: slideInLeft 3s ease-out forwards;
+      }
+      .couple {
+        animation: slideInRight 3s ease-out forwards;
+      }
+    </style>
+    <!-- <meta property="og:image" content="https://bolt.new/static/og_default.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bolt.new/static/og_default.png"> -->
+</head>
+  <body class="bg-gradient-to-b from-sky-300 to-emerald-200 min-h-screen overflow-x-hidden">
+    <div class="relative min-h-screen flex items-center justify-center">
+      <div class="sun absolute top-10 right-20 w-32 h-32 bg-yellow-400 rounded-full shadow-2xl"></div>
+
+      <div class="cloud absolute top-20 left-0 w-32 h-16 bg-white rounded-full opacity-80"></div>
+      <div class="cloud absolute top-20 left-0 w-32 h-16 bg-white rounded-full opacity-90" style="animation-delay: -40s;"></div>
+      <div class="cloud absolute top-40 left-0 w-40 h-20 bg-white rounded-full opacity-70" style="animation-delay: -20s;"></div>
+      <div class="cloud absolute top-40 left-0 w-40 h-20 bg-white rounded-full opacity-60" style="animation-delay: -50s;"></div>
+
+      <div class="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-green-600 to-green-400"></div>
+
+      <div class="sheep absolute bottom-20 left-20" style="animation-delay: 0.5s;"><img src="/sheep.png" alt="Sheep" class="w-auto h-80"/></div>
+      <div class="couple absolute bottom-20 right-20" style="animation-delay: 1.5s;"><img src="/couple.png" alt="couple" class="w-auto h-96"/></div>
+
+      <div class="z-10 text-center px-6">
+        <h1 class="text-6xl md:text-8xl font-bold text-white drop-shadow-2xl mb-4 animate-pulse">
+          FarmQuest
+        </h1>
+        <p class="text-2xl md:text-3xl text-green-900 font-semibold mb-8 drop-shadow-lg">
+          Gamified Platform for Sustainable Farming Practices
+        </p>
+        <button id="startBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xl px-12 py-4 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300">
+          Start My Farm
+        </button>
+      </div>
+    </div>
+
+    <div id="nameModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white rounded-2xl p-8 shadow-2xl max-w-md w-full mx-4 transform scale-0" id="modalContent">
+        <h2 class="text-3xl font-bold text-emerald-700 mb-4">Welcome, Farmer! 🌾</h2>
+        <p class="text-gray-600 mb-6">Enter your name to begin your sustainable farming journey</p>
+        <input type="text" id="farmerName" placeholder="Your name" class="w-full px-4 py-3 border-2 border-emerald-300 rounded-lg mb-6 focus:outline-none focus:border-emerald-500 text-lg">
+        <button id="submitName" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-all">
+          Start Farming! 🌱
+        </button>
+      </div>
+    </div>
+
+    <audio id="bgSound" loop>
+      <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvHZhjgIF2O46+qhUxIHRJzi8bpnHQU2jdfyzHksBSR3x/DdkEAKFF606+uoVRQKRp/g8r5sIQUrj9Dy2Yc4CBdjt+vqoVMSB0Sd4vG6Zx0FN43Y8sx6LQUkeMfw3Y9AChRevOvqqVQTCkaf4PK+bCEFK4/R8dmHOAgXY7fr6aFSEwdFneLxumgeBTeN2PLNei4FI3fH8N+RQAoTXb3r66lUEwpGn+Dyvmwh" type="audio/wav">
+    </audio>
+
+    <script>
+      $(document).ready(function() {
+        $('#startBtn').click(function() {
+          $('#nameModal').removeClass('hidden');
+          $('#modalContent').addClass('scale-100');
+        });
+
+        $('#submitName').click(function() {
+          const name = $('#farmerName').val().trim();
+          if (name) {
+            localStorage.setItem('farmerName', name);
+
+            if (!localStorage.getItem('farmerData')) {
+              const initialData = {
+                name: name,
+                xp: 0,
+                coins: 0,
+                level: 1,
+                completedChallenges: [],
+                badges: [],
+                hasCompletedQuiz: false
+              };
+              localStorage.setItem('farmerData', JSON.stringify(initialData));
+            }
+
+            $('body').fadeOut(500, function() {
+              window.location.href = 'dashboard.html';
+            });
+          } else {
+            alert('Please enter your name!');
+          }
+        });
+
+        $('#farmerName').keypress(function(e) {
+          if (e.which === 13) {
+            $('#submitName').click();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

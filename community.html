@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FarmQuest - Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+      @keyframes slideIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .post-item {
+        animation: slideIn 0.5s ease-out;
+      }
+      .badge-shine {
+        animation: shine 2s infinite;
+      }
+      @keyframes shine {
+        0%, 100% { filter: brightness(1); }
+        50% { filter: brightness(1.3); }
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-emerald-50 to-lime-100 min-h-screen flex flex-col">
+    <nav class="bg-emerald-700 text-white shadow-xl">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl font-bold">FarmQuest</h1>
+          <div class="flex gap-6">
+            <a href="dashboard.html" class="hover:text-yellow-300 font-semibold">Dashboard</a>
+            <a href="knowledge.html" class="hover:text-yellow-300 font-semibold">Knowledge</a>
+            <a href="community.html" class="hover:text-yellow-300 font-semibold border-b-2 border-yellow-300">Community</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <h2 class="text-2xl font-bold text-emerald-700 mb-4">📢 Share Your Progress</h2>
+            <textarea id="postInput" placeholder="What farming milestone did you achieve today?" class="w-full px-4 py-3 border-2 border-emerald-200 rounded-lg mb-4 focus:outline-none focus:border-emerald-500 resize-none" rows="3"></textarea>
+            <button id="postBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-lg transition-all transform hover:scale-105">
+              Post Update 🚀
+            </button>
+          </div>
+
+          <h3 class="text-3xl font-bold text-emerald-800 mb-6">🌱 Community Feed</h3>
+          <div id="feedContainer" class="space-y-4">
+          </div>
+        </div>
+
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <h3 class="text-2xl font-bold text-emerald-700 mb-4">🏆 Your Achievements</h3>
+            <div id="badgesContainer" class="grid grid-cols-3 gap-4">
+            </div>
+            <p id="noBadges" class="text-gray-500 text-center py-8 hidden">Complete challenges to earn badges!</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-amber-100 to-yellow-100 rounded-2xl shadow-xl p-6">
+            <h3 class="text-xl font-bold text-amber-800 mb-4">💡 Farming Fact</h3>
+            <p class="text-gray-700" id="farmingFact"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-emerald-800 text-white py-6 mt-auto">
+      <div class="container mx-auto text-center">
+        <p class="text-lg">🌍 Building a sustainable future, one farm at a time</p>
+      </div>
+    </footer>
+
+    <script src="js/community.js"></script>
+  </body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FarmQuest - Knowledge Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+      .flip-card {
+        perspective: 1000px;
+        height: 250px;
+      }
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+      .flip-card:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+      .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 1rem;
+      }
+      .flip-card-back {
+        transform: rotateY(180deg);
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-emerald-50 to-lime-100 min-h-screen">
+    <nav class="bg-emerald-700 text-white shadow-xl">
+      <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl font-bold">FarmQuest</h1>
+          <div class="flex gap-6">
+            <a href="dashboard.html" class="hover:text-yellow-300 font-semibold">Dashboard</a>
+            <a href="knowledge.html" class="hover:text-yellow-300 font-semibold border-b-2 border-yellow-300">Knowledge</a>
+            <a href="community.html" class="hover:text-yellow-300 font-semibold">Community</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-8">
+      <div class="bg-white rounded-2xl shadow-2xl p-8 mb-8">
+        <h2 class="text-4xl font-bold text-emerald-700 mb-2 text-center">📘 Sustainable Farming Quiz</h2>
+        <p class="text-gray-600 text-center mb-8">Test your knowledge and earn rewards!</p>
+        <div id="quizSection"></div>
+        <div id="resultSection" class="hidden text-center"></div>
+      </div>
+
+      <h3 class="text-3xl font-bold text-emerald-800 mb-6 text-center">🌱 Farming Tips</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center p-6 shadow-xl">
+              <h4 class="text-2xl font-bold text-white text-center">What is Composting? 🌿</h4>
+            </div>
+            <div class="flip-card-back bg-white shadow-xl p-6 flex items-center">
+              <p class="text-gray-700">Composting is the natural process of recycling organic matter into nutrient-rich fertilizer. It reduces waste and improves soil health!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center p-6 shadow-xl">
+              <h4 class="text-2xl font-bold text-white text-center">Rainwater Harvesting 💧</h4>
+            </div>
+            <div class="flip-card-back bg-white shadow-xl p-6 flex items-center">
+              <p class="text-gray-700">Collecting and storing rainwater for irrigation conserves groundwater, reduces water bills, and provides a sustainable water source.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center p-6 shadow-xl">
+              <h4 class="text-2xl font-bold text-white text-center">Crop Rotation 🔄</h4>
+            </div>
+            <div class="flip-card-back bg-white shadow-xl p-6 flex items-center">
+              <p class="text-gray-700">Growing different crops in sequence prevents soil depletion, breaks pest cycles, and maintains soil fertility naturally.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-gradient-to-br from-lime-400 to-lime-600 flex items-center justify-center p-6 shadow-xl">
+              <h4 class="text-2xl font-bold text-white text-center">Organic Pest Control 🐞</h4>
+            </div>
+            <div class="flip-card-back bg-white shadow-xl p-6 flex items-center">
+              <p class="text-gray-700">Using beneficial insects, companion planting, and natural repellents eliminates pests without harmful chemicals.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center p-6 shadow-xl">
+              <h4 class="text-2xl font-bold text-white text-center">Mulching Benefits 🍂</h4>
+            </div>
+            <div class="flip-card-back bg-white shadow-xl p-6 flex items-center">
+              <p class="text-gray-700">Mulch retains soil moisture, suppresses weeds, regulates temperature, and adds organic matter as it decomposes.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div class="flip-card-front bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center p-6 shadow-xl">
+              <h4 class="text-2xl font-bold text-white text-center">Cover Crops 🌾</h4>
+            </div>
+            <div class="flip-card-back bg-white shadow-xl p-6 flex items-center">
+              <p class="text-gray-700">Planting cover crops during off-seasons prevents erosion, fixes nitrogen, and improves soil structure and biodiversity.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-emerald-800 text-white py-6 mt-12">
+      <div class="container mx-auto text-center">
+        <p class="text-lg">🌍 Building a sustainable future, one farm at a time</p>
+      </div>
+    </footer>
+
+    <script src="js/quiz.js"></script>
+  </body>
+</html>
