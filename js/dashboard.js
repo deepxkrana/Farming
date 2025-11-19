@@ -257,6 +257,22 @@ function getAllFarmersFromStorage() {
   } catch (e) {
     // localStorage not accessible (unlikely here); return current user only
   }
+  
+  // Add dummy users for a more populated leaderboard
+  const dummyUsers = [
+    { name: 'GreenThumb Guru', xp: 1250 },
+    { name: 'EcoFarmer Max', xp: 980 },
+    { name: 'Sustainable Sam', xp: 850 },
+    { name: 'Organic Olivia', xp: 720 },
+    { name: 'Compost King', xp: 650 },
+    { name: 'Rainwater Rita', xp: 580 },
+    { name: 'CropMaster Chris', xp: 520 },
+    { name: 'SoilScientist Sarah', xp: 450 },
+    { name: 'Harvest Hero', xp: 380 },
+    { name: 'FarmFresh Frank', xp: 20 }
+  ];
+  
+  users.push(...dummyUsers);
   return users;
 }
 
